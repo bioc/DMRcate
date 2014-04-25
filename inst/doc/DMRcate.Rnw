@@ -1,8 +1,6 @@
 \documentclass{article}
 \usepackage{url}
 \usepackage{breakurl}
-\usepackage{amsmath}
-\usepackage{amssymb}
 %\VignetteIndexEntry{The DMRcate package user's guide}
 %\VignetteEngine{knitr::knitr}
 \begin{document}
@@ -16,6 +14,8 @@
 \texttt{DMRcate} extracts the most differentially methylated regions (DMRs), variably methylated regions (VMRs) and hypermethylated regions (HMRs) from Illumina\textregistered Infinium HumanMethylation450 BeadChip (hereby referred to as the 450k array) samples via kernel density modelling. We provide clean, transparent code and highly interpretable and exportable results.
 \end{abstract}
 
+\texttt{DMRcate} requires R version 3.0.2 or higher.
+
 <<bioconductor, message=FALSE, warning=FALSE, eval=FALSE>>=
 source("http://bioconductor.org/biocLite.R")
 biocLite("DMRcate")
@@ -27,7 +27,7 @@ Load \texttt{DMRcate} into the workspace:
 library(DMRcate)
 @
 
-We now can load in the test data set of beta values. We assume at this point that normalisation and filtering out bad-quality probes via their detection \textit{p}-values have already been done. Many packages are available for these purposes, including \texttt{minfi}, \texttt{wateRmelon} and \texttt{methylumi}. M-values (logit-transform of beta) are preferable to beta values for significance testing via \texttt{limma} because of increased sensitivity, but we will retain the beta matrix for visualisation purposes later on.
+We now can load in the test data set of beta values. We assume at this point that normalisation and filtering out bad-quality probes via their detection \textit{p}-values have already been done. Many packages are available for these purposes, including \texttt{minfi}, \texttt{wateRmelon} and \texttt{methylumi}. M-values (logit-transform of beta) are preferable to beta values for analysis because of increased sensitivity, but we will retain the beta matrix for visualisation purposes later on.
 
 The TCGA (Cancer Genome Atlas - colorectal cancer) data in \texttt{myBetas} only comes from chromosome 20, but DMRcate will have no problem taking in the approximately half million probes as input for this pipeline either.
 
@@ -54,7 +54,7 @@ myMs.noSNPs <- rmSNPandCH(myMs, dist=2, mafcut=0.05)
 nrow(myMs.noSNPs)
 @
 
-Next we want to annotate our matrix of M-values with relevant information. The default is the \texttt{ilmn12.hg19} annotation, but this can be substituted for any argument compatible with the interface provided by the \texttt{minfi} package. We also use the backbone of the \texttt{limma} pipeline for differential array analysis to get fold changes and, optionally, filter probes by their fdr-corrected \textit{p}-value.
+Next we want to annotate our matrix of M-values with relevant information. The default is the \texttt{ilmn12.hg19} annotation, but this can be substituted for any argument compatible with the interface provided by the \texttt{minfi} package. We also use the backbone of the \texttt{limma} pipeline for differential array analysis to get fold changes and, optionally, filter probes by their fdr-corrected textit{p}-value.
 Here we have 38 patients with 2 tissue samples each taken from them. We want to compare within patients across tissue samples, so we set up our variables for a standard limma pipeline, and set \texttt{coef=39} in \texttt{annotate} since this corresponds to the phenotype comparison in \texttt{design}. We also only want to retain probes that are signficant in this comparison, post-fdr-correction.
 
 <<annotate>>=
@@ -73,7 +73,7 @@ Now we can find our most differentially methylated regions with \texttt{dmrcate}
 Mathematically, we formulate the underlying density $f$ from the vector $X$ of hg19 coordinates of each CpG used as input like this:
 
 \begin{equation}
- \hat{f}_{\boldsymbol{w},\boldsymbol{X},H}(x) = n^{-1}\displaystyle\sum\limits_{i=1}^n \boldsymbol{w}(X_{i})K_{H}(x-X_{i})
+ \hat{f}_{nH}(x) = n^{-1}\displaystyle\sum\limits_{i=1}^n w(X_{i})K_{H}(x-X_{i})
 \end{equation}
 
 \noindent where $K(x)$ is the kernel function, $H$ the bandwidth (needs to be specified, either in nucleotides or in probes when \texttt{consec=TRUE}) and $w$ the weight vector containing the absolute fold change values for each probe.

@@ -85,7 +85,8 @@ annotate <- function(object,
     RSanno <- getAnnotation(RSobject)
     annotated <- data.frame(ID=rownames(object),
                             weights=apply(object, 1, var), CHR=RSanno$chr, pos=RSanno$pos,
-                            gene=RSanno$UCSC_RefGene_Name, group=RSanno$UCSC_RefGene_Group)
+                            gene=RSanno$UCSC_RefGene_Name, group=RSanno$UCSC_RefGene_Group,
+                            betafc=rep(0, nrow(object)))
     if (quantcut > 0) {
       annotated <- annotated[annotated$weights >
                                quantile(annotated$weights, quantcut),]
@@ -96,7 +97,8 @@ annotate <- function(object,
     RSanno <- getAnnotation(RSobject)
     annotated <- data.frame(ID=rownames(object),
                             weights=apply(object, 1, mean), CHR=RSanno$chr, pos=RSanno$pos,
-                            gene=RSanno$UCSC_RefGene_Name, group=RSanno$UCSC_RefGene_Group)
+                            gene=RSanno$UCSC_RefGene_Name, group=RSanno$UCSC_RefGene_Group,
+                            betafc=rep(0, nrow(object)))
     annotated <- annotated[annotated$weights > logit2(cut),]
   })
   annotated <- annotated[order(annotated$CHR, annotated$pos),]
@@ -182,7 +184,7 @@ dmrcate <- function(object, bw=1000, p.adjust.method="BH", pcutoff=0.05,
   sigprobes <- object[object$fdr <= pcutoff,, drop=FALSE]
   if (nrow(sigprobes)==0) {
     txt <- "No signficant regions found. Try increasing the value of
-    'pcutoff' in 'dmrcate' and/or 'annotate'."
+    'pcutoff' in dmrcate() and/or annotate()."
     stop(paste(strwrap(txt, exdent=2), collapse="\n"))
   }
   probeIDs <- pvals <- genes <- group <- hg19coord <- betafc <- list()
