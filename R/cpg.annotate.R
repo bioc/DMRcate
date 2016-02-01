@@ -66,4 +66,3 @@ cpg.annotate <- function (datatype = c("array", "sequencing"), object,
   }
   return(annotated)
 }
-
