@@ -5,7 +5,6 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
 {
   stopifnot(class(CpGs) %in% c("matrix", "GRanges"))
   stopifnot(dmr %in% 1:length(ranges))
-  data(dmrcatedata)
   if(is.null(samps)){samps=1:length(phen.col)}
   group <- unique(names(phen.col))
   if(is.matrix(CpGs)){
