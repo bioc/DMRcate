@@ -5,6 +5,10 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
 {
   stopifnot(class(CpGs) %in% c("matrix", "GRanges"))
   stopifnot(dmr %in% 1:length(ranges))
+  env <- new.env(parent=emptyenv())
+  data(dmrcatedata, envir=env)
+  stopifnot(class(CpGs) %in% c("matrix", "GRanges"))
+  stopifnot(dmr %in% 1:length(ranges))
   if(is.null(samps)){samps=1:length(phen.col)}
   group <- unique(names(phen.col))
   if(is.matrix(CpGs)){
@@ -50,9 +54,9 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
                                              aggregateGroups=TRUE, col=phen.col[sort(group)], ylim=c(0, 1), name="Group means")))
      
   switch(genome, 
-         hg19={tx=tx.hg19},
-         hg38={tx=tx.hg38},
-         mm10={tx=tx.mm10}
+         hg19={tx=env$tx.hg19},
+         hg38={tx=env$tx.hg38},
+         mm10={tx=env$tx.mm10}
   )
   extras <- list(AnnotationTrack(dmrs.inplot, name="DMRs", showFeatureId=TRUE, col=NULL, fill="purple", id=dmrs.inplot$ID, 
                                  fontcolor="black"))
