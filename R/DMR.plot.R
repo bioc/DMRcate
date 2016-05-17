@@ -3,8 +3,11 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
                                                                       annotation="ilmn12.hg19"), 
          samps=NULL, ...)
 {
+  env <- new.env(parent=emptyenv())
+  data(dmrcatedata, envir=env)
   stopifnot(class(CpGs) %in% c("matrix", "GRanges"))
   stopifnot(dmr %in% 1:length(ranges))
+  data(dmrcatedata)
   if(is.null(samps)){samps=1:length(phen.col)}
   group <- unique(names(phen.col))
   if(is.matrix(CpGs)){
@@ -13,7 +16,7 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
     RSanno <- RSanno[order(RSanno$chr, RSanno$pos),]
     CpGs <- CpGs[rownames(RSanno),]
     colnames(CpGs) <- paste(colnames(CpGs), ".C", sep='')
-    cov <- matrix(1, nrow(CpGs), ncol(CpGs), dimnames = list(rownames(CpGs), sub(".C", ".cov", colnames(CpGs))))
+    cov <- matrix(1, nrow(CpGs), ncol(CpGs), dimnames = list(rownames(CpGs), sub(".C$", ".cov", colnames(CpGs))))
     cpgs.ranges <- GRanges(RSanno$chr, IRanges(RSanno$pos, RSanno$pos))
     dummy <- matrix(0, nrow=nrow(CpGs), ncol=2*ncol(CpGs))
     dummy[,seq(1, 2*ncol(CpGs), 2)] <- CpGs
@@ -37,7 +40,7 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
                 as.data.frame(values(cpgs.ranges)[,grep("cov$", colnames(values(cpgs.ranges)))])
   methRatios <- GRanges(cpgs.ranges, mcols=methRatios)
   mcols(methRatios) <- mcols(methRatios)[samps]
-  names(mcols(methRatios)) <- gsub("mcols.", "", gsub("*.C", "", names(mcols(methRatios))))
+  names(mcols(methRatios)) <- gsub("mcols.", "", gsub("*.C$", "", names(mcols(methRatios))))
   phen.col <- phen.col[samps]
   
  
@@ -50,9 +53,9 @@ DMR.plot <- function(ranges, dmr, CpGs, phen.col,
                                              aggregateGroups=TRUE, col=phen.col[sort(group)], ylim=c(0, 1), name="Group means")))
      
   switch(genome, 
-         hg19={tx=tx.hg19},
-         hg38={tx=tx.hg38},
-         mm10={tx=tx.mm10}
+         hg19={tx=env$tx.hg19},
+         hg38={tx=env$tx.hg38},
+         mm10={tx=env$tx.mm10}
   )
   extras <- list(AnnotationTrack(dmrs.inplot, name="DMRs", showFeatureId=TRUE, col=NULL, fill="purple", id=dmrs.inplot$ID, 
                                  fontcolor="black"))
