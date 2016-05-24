@@ -25,10 +25,8 @@ DMR.plot(ranges, dmr, CpGs, phen.col, genome = c("hg19", "hg38", "mm10"),
   }
   \item{CpGs}{
     Either:
-    
     - A matrix of beta values for plotting, with unique Illumina probe IDs
     as rownames.
-    
     - A GRanges object describing individual CpGs to be plotted, containing
       methylated reads and total coverage for each sample. Please see the 
       worked example in the vignette for the correct structure of this object.
