@@ -33,7 +33,7 @@ dmrcate(object,
   }
   \item{C}{
     Scaling factor for bandwidth. Gaussian kernel is calculated where 
-    \code{lambda}/\code{C} = sigma. Empirical testing shows that when \code{lambda=1000}, near-optimal prediction of sequencing-derived DMRs is obtained when \code{C} is approximately 2, i.e. 1 standard deviation of Gaussian kernel = 500 base pairs. Cannot be < 0.2.
+    \code{lambda}/\code{C} = sigma. Empirical testing shows that, for 450k data when \code{lambda=1000}, near-optimal prediction of sequencing-derived DMRs is obtained when \code{C} is approximately 2, i.e. 1 standard deviation of Gaussian kernel = 500 base pairs. Should be a lot larger for sequencing data - suggest C=50. Cannot be < 0.2.
   }
   \item{p.adjust.method}{
     Method for \emph{p}-value adjustment from the significance test. Default is
@@ -122,8 +122,8 @@ myMs.noSNPs <- rmSNPandCH(myMs, dist=2, mafcut=0.05)
 patient <- factor(sub("-.*", "", colnames(myMs)))
 type <- factor(sub(".*-", "", colnames(myMs)))
 design <- model.matrix(~patient + type) 
-myannotation <- cpg.annotate(myMs.noSNPs, analysis.type="differential",
-    design=design, coef=39)
+myannotation <- cpg.annotate("array", myMs.noSNPs, what="M", arraytype = "450K",
+                             analysis.type="differential", design=design, coef=39)
 dmrcoutput <- dmrcate(myannotation, lambda=1000)
 }
 }
