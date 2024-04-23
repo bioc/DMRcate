@@ -7,7 +7,7 @@ CHANGES IN DMRcate VERSION 3.0.0
 
 CHANGES IN DMRcate VERSION 2.16.1
 
-DSS dependency removed
+- DSS dependency removed
 
 CHANGES IN DMRcate VERSION 2.15.1
 
@@ -16,8 +16,7 @@ CHANGES IN DMRcate VERSION 2.15.1
 
 CHANGES IN DMRcate VERSION 2.8.1
 
-CITATION updated.
-
+- CITATION updated.
 
 CHANGES IN DMRcate VERSION 2.0.0
 - Full utility for WGBS and RRBS assays implemented using sequencing.annotate(): Users can either input a) A BSseq object and model matrix from edgeR::modelMatrixMeth, or b) Output from DSS::DMLtest() or DSS::DMLtest.multiFactor(),
