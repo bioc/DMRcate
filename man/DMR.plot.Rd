@@ -79,7 +79,7 @@ DMR.plot(ranges,
   A plot to the current device.
 }
 \author{
-  Tim J. Peters <t.peters@garvan.org.au>, Aaron Statham <a.statham@garvan.org.au>
+  Tim J. Peters <t.peters@garvan.org.au>, Aaron Statham <a.statham@garvan.org.au>, Braydon Meyer <b.meyer@garvan.org.au>
 }
 \examples{
 library(GenomicRanges)
