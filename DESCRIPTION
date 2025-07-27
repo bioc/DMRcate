@@ -1,7 +1,7 @@
 Package: DMRcate
 Title: Methylation array and sequencing spatial analysis methods
-Version: 3.5.0
-Date: 2024-16-12
+Version: 3.5.1
+Date: 2025-07-26
 Author: Tim Peters
 Authors@R: c(person("Tim", "Peters", role = c("cre", "aut"),
                     email = "t.peters@garvan.org.au"),
@@ -11,7 +11,7 @@ Authors@R: c(person("Tim", "Peters", role = c("cre", "aut"),
              person("Tim", "Triche, Jr.", role = "ctb"))
 Description: De novo identification and extraction of differentially methylated regions (DMRs) from the human genome using Whole Genome Bisulfite Sequencing (WGBS) and Illumina Infinium Array (450K and EPIC) data. Provides functionality for filtering probes possibly confounded by SNPs and cross-hybridisation. Includes GRanges generation and plotting functions.
 Depends: R (>= 4.3.0)
-Imports: AnnotationHub, ExperimentHub, bsseq, GenomeInfoDb, limma,
+Imports: AnnotationHub, ExperimentHub, bsseq, Seqinfo, limma,
         edgeR, minfi, missMethyl, GenomicRanges, plyr, Gviz, IRanges,
         stats, utils, S4Vectors, methods, graphics,
         SummarizedExperiment, biomaRt, grDevices
@@ -20,7 +20,7 @@ biocViews: DifferentialMethylation, GeneExpression, Microarray,
         GenomeAnnotation, DNAMethylation, OneChannel, TwoChannel,
         MultipleComparison, QualityControl, TimeCourse, Sequencing,
         WholeGenome, Epigenetics, Coverage, Preprocessing, DataImport
-Suggests: knitr, RUnit, BiocGenerics,
+Suggests: knitr, RUnit, BiocGenerics, GenomeInfoDb,
         IlluminaHumanMethylation450kanno.ilmn12.hg19,
         IlluminaHumanMethylationEPICanno.ilm10b4.hg19,
         IlluminaHumanMethylationEPICv2anno.20a1.hg38,

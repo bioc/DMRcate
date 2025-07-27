@@ -56,6 +56,7 @@ as.data.frame(colData(bis_1072))
 For standardisation purposes (and for \texttt{DMR.plot} to recognise the genome) we will change the chromosome naming convention to UCSC:
 
 <<changeseqlevs>>=
+library(GenomeInfoDb)
 bis_1072 <- renameSeqlevels(bis_1072, mapSeqlevels(seqlevels(bis_1072), "UCSC"))
 @
 
